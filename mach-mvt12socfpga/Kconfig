@@ -1,0 +1,84 @@
+
+if  ARCH_MVT12SOCFPGA
+
+config PLAT_MVT12SOCFPGA
+	def_bool y
+	help
+	  Base platform code for T12 SoC FPGA based on ARM9EJ-S
+
+menu "MVT12 SoCs Supports"
+
+comment "MVT12 SoCs"
+
+config CPU_MVT12SOCFPGA
+	bool "T12FPGA"
+	select FPGA_TYPE
+	default y
+
+if CPU_MVT12SOCFPGA
+
+comment "MVT12 Board Type"
+
+config FPGA_TYPE
+	bool "FPGA"
+	select MFP_7V2000T_Q_FPGA_BOARD
+
+if FPGA_TYPE
+
+config MFP_7V2000T_Q_FPGA_BOARD
+	bool "MFP-7V2000T-Q FPGA B'd (ARM9 based)"
+	select CPU_ARM926T
+	select SOC_BUS
+	select CLKSRC_MVMFP_7V2000T_Q_FPGA_PWM
+	select GENERIC_CLOCKEVENTS
+	select MVMFP_7V2000T_Q_FPGA_IRQ
+
+choice
+	depends on FPGA_TYPE
+	prompt "Select Memory Type"
+	default T12_DDR3_512MB
+
+config T12_DDR3_4GB
+	bool "DDR3 4GB"
+
+config T12_DDR3_512MB
+	bool "DDR3 512MB"
+
+endchoice # Select Memory Type
+
+choice
+	depends on FPGA_TYPE
+	prompt "Select Debug UART"
+
+config MFP_7V2000T_Q_DEBUG_UART0
+	bool "UART0"
+
+config MFP_7V2000T_Q_DEBUG_UART1
+	bool "UART1"
+
+config MFP_7V2000T_Q_DEBUG_UART2
+	bool "UART2"
+
+endchoice # Select Debug UART
+
+endif # FPGA_TYPE
+
+config EVB_TYPE
+	bool "EVB"
+
+config POP_TYPE
+	bool "POP"
+
+endif # CPU_MVT12SOCFPGA
+
+endmenu # MTEKVISION MVT12 SoCs Supports
+
+menu "MVt12 Platform Common Options"
+
+comment "Boot Options"
+
+comment "Power Management"
+
+endmenu # Platform Common Options"
+
+endif # ARCH_MVT12SOCFPGA

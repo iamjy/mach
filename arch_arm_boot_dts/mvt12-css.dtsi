@@ -1,0 +1,104 @@
+/*
+ * LG Electronics Odin
+ */
+
+/ {
+    css {
+        compatible = "simple-bus";
+  		interrupt-parent = <&pic>;
+   	    #address-cells = <2>;
+   	    #size-cells = <2>;
+        ranges;
+
+        camera {
+            status = "okay";
+       		name = "camera";
+            compatible = "mtekvision,camera";
+        };
+        system@330F0000 {
+            status = "disabled";
+            compatible = "mtekvision,css-crg";
+            reg = <0 0x330F0000 0 0x900>;
+        };
+		i2c@330F5000 {
+			status = "disabled";
+			compatible = "mtekvision,css-i2c";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0 0x330F5000 0 0x80>;
+			interrupts = <0 132 0x4>;
+			id = <10>;
+			y432a@34{
+				compatible = "lgit,y432a";
+				reg = <0x34>;
+			};
+		};
+		i2c@330F5080 {
+			status = "disabled";
+			compatible = "mtekvision,css-i2c";
+			reg = <0 0x330F5080 0 0x80>;
+			interrupts = <0 133 0x4>;
+			id = <11>;
+		};
+		i2c@330F5100 {
+			status = "disabled";
+			compatible = "mtekvision,css-i2c";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0 0x330F5100 0 0x80>;
+			interrupts = <0 134 0x4>;
+			id = <12>;
+			y445a@6c{
+				compatible = "lgit,y445a";
+				reg = <0x6c>;
+			};
+		};
+        mipicsi2@330F2000 {
+            status = "disabled";
+            compatible = "mtekvision,mipi-csi2";
+            reg = <0 0x330F2000 0 0x1000
+                   0 0x330F3000 0 0x1000
+                   0 0x330F4000 0 0x1000>;
+		    interrupts = <0 142 0x4>,<0 143 0x4>,<0 144 0x4>; 
+        };
+        frgb@68000000 {
+            status = "okay";
+            compatible = "mtekvision,scaler";
+            reg = <0 0x68000000 0 0x8000000>;
+            interrupts = <31>;
+        };
+        isp@60000000 {
+            status = "disabled";
+            compatible = "mtekvision,isp";
+            reg = <0 0x60000000 0 0x4000000>;
+            interrupts = <0 145 0x4>,<0 146 0x4>,<0 147 0x4>;
+            id = <0>;
+        };
+        isp@64000000 {
+            status = "disabled";
+            compatible = "mtekvision,isp";
+            reg = <0 0x64000000 0 0x4000000>;
+            interrupts = <0 148 0x4>,<0 149 0x4>,<0 150 0x4>;
+            id = <1>;
+        };
+        ispwarp@330FA000 {
+            status = "disabled";
+            compatible = "mtekvision,isp-wrap";
+            reg = <0 0x330FA000 0 0x1000>;
+            id = <0>;
+        };
+        ispwarp@330FB000 {
+            status = "disabled";
+            compatible = "mtekvision,isp-wrap";
+            reg = <0 0x330FB000 0 0x1000>;
+            id = <1>;
+        };
+
+        jpgenc@330F6000 {
+            status = "disabled";
+            compatible = "mtekvision,jpeg-encoder";
+            reg = <0 0x330F6000 0 0x1000>;
+            interrupts = <0 138 0x4>;
+        };
+    };
+};

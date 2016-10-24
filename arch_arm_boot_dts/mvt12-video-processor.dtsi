@@ -1,0 +1,17 @@
+
+/ {
+	aliases {
+		video-encoder = &encoder;
+	};
+
+	soc {
+		encoder: video-processor@0x70000000 {
+			compatible = "Mn_nH,MnHEVC Encoder IP";
+			reg = <0x70000000 0x1000
+				   0x71000000 0x1000
+				   0x72000000 0x1000
+				   0x50F00000 0x1000>;
+			interrupts= <33>;
+		};
+	};
+};

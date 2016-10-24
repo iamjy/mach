@@ -1,0 +1,83 @@
+
+if ARCH_MV89XX
+
+config PLAT_MV89XX
+	def_bool y
+	help
+	  Base platform code for any Mtekvision MV89XX devices
+
+menu "MV89XX SoCs Supports"
+
+comment "MV89XX SoCs"
+
+config CPU_MV8930
+	bool "MV8930"
+	default y
+
+if CPU_MV8930
+
+comment "MV8930 Board Type"
+
+config FPGA_TYPE
+	bool "FPGA"
+	default y
+
+config VICTORIA_FPGA_BOARD
+	depends on FPGA_TYPE
+	bool "VICTORIA FPGA Board (ARM9 based)"
+	select CPU_ARM926T
+	select SOC_BUS
+	select CLKSRC_VICTORIA_FPGA_PWM
+	select GENERIC_CLOCKEVENTS
+	select VICTORIA_FPGA_IRQ
+	default y
+	help
+	  This FPGA is for ODIN-CSS H/W block verification
+
+choice
+	depends on VICTORIA_FPGA_BOARD
+	prompt "Select Memory Type"
+	default VICTORIA_LPDDR2_128MB
+
+config VICTORIA_LPDDR2_128MB
+	bool "LPDDR2 128MB"
+
+endchoice # Select Memory Type"
+
+choice
+	depends on VICTORIA_FPGA_BOARD
+	prompt "Select Debug UART"
+
+config VICTORIA_DEBUG_UART0
+	bool "UART0"
+
+config VICTORIA_DEBUG_UART1
+	bool "UART1"
+
+config VICTORIA_DEBUG_UART2
+	bool "UART2"
+
+config VICTORIA_DEBUG_UART3
+	bool "UART3"
+
+endchoice # Select Debug UART
+
+config EVB_TYPE
+	bool "EVB"
+
+config POP_TYPE
+	bool "POP"
+
+endif # CPU_MV8930
+
+endmenu # MTEKVISION MV89XX SoCs Supports
+
+menu "MV89XX Platform Common Options"
+
+comment "Boot Options"
+
+comment "Power Management"
+
+endmenu # Platform Common Options"
+
+endif # ARCH_MV89XX

@@ -1,0 +1,111 @@
+/*
+ *  Copyright (C) 2015 Mtekvision Corporation <www.mtekvision.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ---------------------------------------------------------------------
+ * Device Tree Source for Victoria FPGA Flatform V1.0 Board
+ * ---------------------------------------------------------------------
+ */
+
+/dts-v1/;
+/include/ "mvt12-socfpga.dtsi"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	model = "MFP-7V200T-Q SOC FPGA Rev1.3";
+	compatible = "mtekvision,socfpga-mfp7v2000tq", "mv,socfpga";
+
+	aliases {
+		mv,system-timer0 = &timer0;
+		mv,system-timer1 = &timer1;
+		mv,system-timer2 = &timer2;
+		mv,system-timer3 = &timer3;
+		mv,system-timer4 = &timer4;
+		mv,system-timer5 = &timer5;
+		mv,uart0 = &uart0;
+		mv,uart1 = &uart1;
+		mv,uart2 = &uart2;
+	};
+
+	chosen {
+		bootargs = "console=/dev/ttyS0,115200n8 ramdisk_size=65556 root=/dev/ram0 rw initrd=0x01800000,16M initrd=/init init=/sbin/init";
+	};
+
+	memory {
+		name = "memory";
+		device_type = "memory";
+		reg = <0x0 0x10000000>; /* TOTAL 512MB, but 256MB for ION heap memory */
+	};
+
+	soc {
+		pwm: timer@50500000 {
+			timer0: timer0 {
+				status = "okay";
+				compatible = "pwm-timer0";
+				interrupts = <11>;
+			};
+
+			timer1: timer1 {
+				status = "okay";
+				compatible = "pwm-timer1";
+				interrupts = <12>;
+			};
+
+			timer2: timer2 {
+				status = "disabled";
+				compatible = "pwm-timer2";
+				interrupts = <13>;
+			};
+
+			timer3: timer3 {
+				status = "disabled";
+				compatible = "pwm-timer3";
+				interrupts = <14>;
+			};
+
+			timer4: timer4 {
+				status = "disabled";
+				compatible = "pwm-timer4";
+				interrupts = <15>;
+			};
+	
+			timer5: timer5 {
+				status = "disabled";
+				compatible = "pwm-timer5";
+				interrupts = <16>;
+			};
+		};
+
+		uart0: serial0@50400000 {
+			status = "okay";
+			compatible = "serial-uart0";
+			interrupts = <0>;
+		};
+
+		uart1: serial1@50410000 {
+			status = "disabled";
+			compatible = "serial-uart1";
+			interrupts = <1>;
+		};
+
+		uart2: serial2@50420000 {
+			status = "disabled";
+			compatible = "serial-uart2";
+			interrupts = <2>;
+		};
+	};
+};
